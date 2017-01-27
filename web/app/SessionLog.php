@@ -4,12 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Created by IntelliJ IDEA.
- * User: k-heiner@hotmail.com
- * Date: 27/01/2017
- * Time: 15:09
- */
 class SessionLog extends Model
 {
     protected $table = 'session_log';
@@ -20,6 +14,6 @@ class SessionLog extends Model
      * @var array
      */
     protected $fillable = [
-        'loginDate', 'logoutDate'
+        'loginDate', 'logoutDate', 'user_id'
     ];
 }

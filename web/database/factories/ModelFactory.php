@@ -24,3 +24,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'removed' => $faker->removed,
     ];
 });
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\SessionLog::class, function (Faker\Generator $faker) {
+
+    return [
+        'loginDate' => $faker->loginDate,
+        'logoutDate' => $faker->logoutDate,
+        'user_id' => $faker->logoutDatuser_id
+    ];
+});

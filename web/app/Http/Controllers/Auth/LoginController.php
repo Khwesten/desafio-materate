@@ -36,4 +36,24 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+
+    public function authenticate()
+    {
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            return redirect()->intended('dashboard');
+        }
+
+//            var_dump($method);
+//            exit;
+//            if ($method == 'logout') {
+//            SessionLog::where('logoutDate', null)
+//                ->where('destination', 'San Diego')
+//                ->update(['delayed' => 1]);
+//            }
+
+//            $session = new SessionLog();
+//            $session->loginDate = date("Y-m-d H:i:s");
+//            $session->user_id = Auth::id();
+//            $session->save();
+    }
 }

@@ -6,4 +6,4 @@ vendor/
 bootstrap/cache/
 Homestead.json
 Homestead.yaml
-.env
+#.env
