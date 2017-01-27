@@ -9,9 +9,8 @@ Use command line on 'web' folder:
 - run: 'composer install';
 - run: 'php artisan migrate';
 - run: 'php artisan db:seed'
-
-- php artisan serve
+- run: 'php artisan serve'
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
