@@ -1,11 +1,18 @@
 <?php
 
-//Route::post('/login', 'UserController@login');
+Route::get('/edit/{id}', 'UserController@editView')->middleware('web');
 
-Route::get('/edit/{id}', 'UserController@editView')->middleware('auth');
+Route::post('/edit/{id}', 'UserController@editDetails')->middleware('web');
 
-Route::post('/edit/{id}', 'UserController@editDetails')->middleware('auth');
+Route::get('/remove/{id}', 'UserController@removeUser')->middleware('web');
 
-Route::get('/remove/{id}', 'UserController@removeUser')->middleware('auth');
+Route::get('/removed', 'UserController@removedView')->middleware('web');
 
-Route::get('/removed', 'UserController@removedView')->middleware('auth');
+header('Access-Control-Allow-Origin: *');
+header( 'Access-Control-Allow-Headers: Authorization, Content-Type' );
+
+Route::post('/login', 'UserController@login');
+
+Route::post('/register', 'UserController@register');
+
+Route::put('/edit/{id}', 'UserController@edit');

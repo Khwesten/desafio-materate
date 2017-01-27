@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Hash;
  */
 class UserController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
 
     public function login(Request $request)
     {
@@ -26,13 +22,64 @@ class UserController extends Controller
 
         $user = User::where('email', $email)->first();
 
-        $userExist = Hash::check($password, $user->password);
+        $passwordIsEqual = ($user) ? Hash::check($password, $user->password) : false;
 
-        if ($userExist) {
-            return response("Usuário logado com sucesso", 200);
+        if ($passwordIsEqual) {
+            $userToEncode = ['id'=> $user->id, 'name' => $user->name, 'email' => $user->email];
+            return response($userToEncode, 200);
         } else {
             return response("Usuário não encontrado!", 404);
         }
+    }
+
+    public function register(Request $request) {
+        $password = $request->password;
+        $name = $request->name;
+        $email = $request->email;
+
+        $user = User::where('email', $email)->first();
+
+        if ($user) return response("Já existe um usuário com esse email, por favor tente outro!", 302);
+
+        $error = $this->checkDataRoRegister($request);
+
+        if ($error) return $error;
+
+        $user = new User();
+
+        $user->name = $name;
+        $user->password = bcrypt($password);
+        $user->email = $email;
+
+        $user->save();
+
+        return response("Usuário cadastrado com sucesso!", 200);
+    }
+
+    public function edit(Request $request, $id) {
+        $password = $request->password;
+        $name = $request->name;
+        $email = $request->email;
+
+        $user = User::find($id);
+
+        $error = $this->checkDataRoRegister($request);
+
+        if ($error) return $error;
+
+        if ($user->email != $email) {
+            $userWithNewEmail = User::where('email', $email)->first();
+            if ($userWithNewEmail) return response("Já existe um usuário com esse email, por favor tente outro!", 302);
+        }
+
+        if ($request->password) $user->password = bcrypt($password);
+
+        $user->name = $name;
+        $user->email = $email;
+
+        $user->save();
+
+        return response("Usuário alterado com sucesso!", 200);
     }
 
     public function editView(Request $request, $id)
@@ -40,7 +87,6 @@ class UserController extends Controller
         $userToEdit = User::where('id', $id)->first();
 
         return view('user-edit', ['user' => $userToEdit]);
-
     }
 
     public function editDetails(Request $request, $id)
@@ -91,5 +137,13 @@ class UserController extends Controller
         }
 
         return;
+    }
+
+    private function checkDataRoRegister($request) {
+        if (!$request->name || !$request->email) {
+            return response("Todos os campos são obrigatórios!", 400);
+        }
+
+        return false;
     }
 }

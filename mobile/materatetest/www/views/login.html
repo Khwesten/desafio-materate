@@ -1,0 +1,14 @@
+<ion-content ng-controller="LoginController">
+  <div class="list list-inset">
+    <label class="item item-input">
+      <input id="login-email" ng-model="email" type="text" placeholder="email">
+    </label>
+    <label class="item item-input">
+      <input id="login-password" ng-model="password" type="password" placeholder="senha">
+    </label>
+    <button class="button button-block button-positive" ng-click="doLogin()">
+      entrar
+    </button>
+    <a ng-href="#register" class="button button-block button-stable" href="#register">cadastrar</a>
+  </div>
+</ion-content>

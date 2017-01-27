@@ -1,0 +1,17 @@
+<ion-content ng-controller="EditController">
+  <div class="list list-inset">
+    <label class="item item-input">
+      <input id="login-name" ng-model="name" type="text" placeholder="Seu nome">
+    </label>
+    <label class="item item-input">
+      <input id="login-email" ng-model="email" type="text" placeholder="Seu email">
+    </label>
+    <label class="item item-input">
+      <input id="login-password" ng-model="password" type="password" placeholder="Sua senha">
+    </label>
+    <small>*SE VOCÊ DEIXAR A SENHA EM BRANCO, ELA NãO SERÁ ALTERADA</small>
+    <button class="button button-block button-positive" ng-click="doEdit()">
+      registrar
+    </button>
+  </div>
+</ion-content>
