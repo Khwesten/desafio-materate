@@ -22,6 +22,8 @@ console of ngrok and put on file configuration 'www/js/config/constants-config.j
 - run: 'cordova platform add android'
 - run: 'ionic run android'
 
+*remind, your device need be enabled to dev mode
+
 ## License
 
 Open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
