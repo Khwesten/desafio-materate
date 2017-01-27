@@ -3,10 +3,16 @@
  */
 (function () {
   'use strict';
-  MaterateTest.controller("HomeController", function ($scope, storage) {
+  MaterateTest.controller("HomeController", function ($scope, $state, storage) {
+    $scope.user = storage.user.get();
 
-    var user = storage.user.get();
+    $scope.username = $scope.user.name;
 
-    $scope.username = user.name;
+    // location.reload();
+
+    $scope.logout = function () {
+      $.jStorage.flush();
+      $state.go('login');
+    }
   });
 })();
