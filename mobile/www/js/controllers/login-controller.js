@@ -12,7 +12,7 @@
       UserModel.login(access)
         .then(function (response) {
           storage.user.set(response);
-          $state.go("home");
+          $state.go('home');
         }).catch(function (err) {
         $ionicPopup.alert({
           title: 'Ops! :(',

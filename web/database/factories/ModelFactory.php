@@ -19,6 +19,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('materatetest'),
+        'last_session' => $faker->last_session,
         'remember_token' => str_random(10),
         'is_admin' => $faker->is_admin,
         'removed' => $faker->removed,
@@ -29,8 +30,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\SessionLog::class, function (Faker\Generator $faker) {
 
     return [
-        'loginDate' => $faker->loginDate,
-        'logoutDate' => $faker->logoutDate,
-        'user_id' => $faker->logoutDatuser_id
+        'login_date' => $faker->login_date,
+        'logout_date' => $faker->logout_date,
+        'user_id' => $faker->user_id
     ];
 });

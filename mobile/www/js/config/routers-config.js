@@ -17,6 +17,7 @@ MaterateTest.config(function ($stateProvider, $urlRouterProvider) {
         })
         .state('home', {
             url: '/home',
+            cache: false,
             templateUrl: 'views/home.html',
             controller: 'HomeController'
         });

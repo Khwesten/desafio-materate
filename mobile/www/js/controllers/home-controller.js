@@ -3,16 +3,23 @@
  */
 (function () {
   'use strict';
-  MaterateTest.controller("HomeController", function ($scope, $state, storage) {
+  MaterateTest.controller("HomeController", function ($scope, $state, storage, UserModel) {
     $scope.user = storage.user.get();
+    $scope.sessions = [];
 
     $scope.username = $scope.user.name;
 
-    // location.reload();
+    UserModel.getSessions($scope.user.id)
+      .then(function (data) {
+        $scope.sessions = data;
+      });
 
-    $scope.logout = function () {
-      $.jStorage.flush();
-      $state.go('login');
+    $scope.out = function () {
+      UserModel.logout($scope.user.id)
+        .then(function () {
+          $.jStorage.flush();
+          $state.go('login', {}, {reload: true})
+        });
     }
   });
 })();

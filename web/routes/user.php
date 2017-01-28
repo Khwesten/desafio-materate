@@ -13,6 +13,10 @@ header( 'Access-Control-Allow-Headers: Authorization, Content-Type' );
 
 Route::post('/login', 'UserController@login');
 
+Route::post('/logout/{id}', 'UserController@logout');
+
+Route::get('/sessions/{id}', 'UserController@sessions');
+
 Route::post('/register', 'UserController@register');
 
 Route::put('/edit/{id}', 'UserController@edit');

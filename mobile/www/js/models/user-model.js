@@ -30,6 +30,20 @@
             return response.data;
           });
       };
+
+      this.getSessions = function (id) {
+        return $http.get(endpointLogin + "/sessions/" + id)
+          .then(function (response) {
+            return response.data;
+          });
+      };
+
+      this.logout = function (id) {
+        return $http.post(endpointLogin + "/logout/" + id)
+          .then(function (response) {
+            return response.data;
+          });
+      };
     };
   });
 })();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SessionLog;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,10 +27,45 @@ class UserController extends Controller
 
         if ($passwordIsEqual) {
             $userToEncode = ['id'=> $user->id, 'name' => $user->name, 'email' => $user->email];
+
+            if (!$user->last_session) {
+                $session = new SessionLog();
+                $session->login_date = date("Y-m-d H:i:s");
+                $session->user_id = $user->id;
+                $session->save();
+
+                $user->last_session = $session->id;
+                $user->save();
+            }
+
             return response($userToEncode, 200);
         } else {
             return response("Usuário não encontrado!", 404);
         }
+    }
+
+    public function logout(Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        $sessionLog = SessionLog::where('id', $user->last_session)->first();
+
+        if($sessionLog) {
+            $sessionLog->logout_date = date("Y-m-d H:i:s");
+            $sessionLog->save();
+        }
+
+        $user->last_session = null;
+        $user->save();
+
+        return;
+    }
+
+    public function sessions(Request $request, $id)
+    {
+        $sessionLog = SessionLog::where('user_id', $id)->get();
+
+        return $sessionLog->toArray();
     }
 
     public function register(Request $request) {
@@ -61,7 +97,7 @@ class UserController extends Controller
         $name = $request->name;
         $email = $request->email;
 
-        $user = User::find($id);
+        $user = User::where('id', $id)->first();
 
         $error = $this->checkDataRoRegister($request);
 
@@ -95,7 +131,7 @@ class UserController extends Controller
         $requestPassword = $request->password;
         $requestName = $request->name;
 
-        $userToEdit = User::find($id);
+        $userToEdit = User::where('id', $id)->first();
 
         if ($requestEmail && $userToEdit->email != $requestEmail) {
             $hasUserWithNewEmail = $userToEdit = User::where('email', $requestEmail)->first();
@@ -129,7 +165,7 @@ class UserController extends Controller
 
     public function removeUser(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::where('id', $id)->first();
 
         if ($user) {
             $user->removed = true;

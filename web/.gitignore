@@ -1,6 +1,5 @@
 node_modules/
 public/storage/
-storage/
 vendor/
 .idea/
 bootstrap/cache/

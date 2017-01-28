@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->integer('last_session')->default(null);
             $table->boolean('is_admin')->default(false);
             $table->boolean('removed')->default(false);
             $table->rememberToken();
@@ -27,8 +28,8 @@ class CreateUsersTable extends Migration
         Schema::create('session_log', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('loginDate');
-            $table->string('logoutDate');
+            $table->string('login_date');
+            $table->string('logout_date')->default(null);
         });
     }
 

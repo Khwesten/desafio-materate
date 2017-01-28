@@ -4,8 +4,14 @@
       <i class="icon ion-person"></i> perfil
     </a>
     <h1 class="title">{{username}}</h1>
-    <button ng-click="logout()" class="button">
+    <button ng-click="out()" class="button">
       <i class="icon ion-log-out"></i> logout
     </button>
   </div>
+  <ion-list style="top: 43px; position: relative">
+    <ion-item ng-repeat="session in sessions">
+      <div ng-if="session.logout_date">{{session.id + ' | ' + session.login_date + '/' + session.logout_date}}</div>
+      <div ng-if="!session.logout_date">{{session.id + ' | SESSÃO ATIVA' }}</div>
+    </ion-item>
+  </ion-list>
 </ion-content>
