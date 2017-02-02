@@ -2,7 +2,8 @@
 
 ### To run
 
-- change data of database on 'config/database' to our data.
+- change data of database on '.env' to our data (if not exist, create your own).
+- create an folder named 'cache' on 'web/bootstrap'
 
 Use command line on 'web' folder:
 
