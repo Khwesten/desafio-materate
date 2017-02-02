@@ -9,7 +9,10 @@ Use command line on 'mobile' folder:
 #### on browser
 
 - run: 'gulp'
-- run: 'ionic serve'
+- in another command prompt, run: 'ionic serve'
+
+<sub><sup>__*If the second step not run, try 'bower install' or install ionic globally: 'npm install -g ionic' and try 
+again.__</sup></sub>
 
 #### on device
 Your device must be connected on pc (if your device is an LG, you need install drivers to him).
