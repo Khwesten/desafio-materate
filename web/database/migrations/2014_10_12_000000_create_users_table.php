@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('login_date');
-            $table->string('logout_date')->default(null);
+            $table->string('logout_date')->nullable();
         });
     }
 

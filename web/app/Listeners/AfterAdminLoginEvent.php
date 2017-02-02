@@ -29,8 +29,6 @@ class AfterAdminLoginEvent
      */
     public function loginHandle($event)
     {
-        @session_start();
-
         $user = $event->user;
 
         $session = new SessionLog();
@@ -38,7 +36,8 @@ class AfterAdminLoginEvent
         $session->user_id = $user->id;
         $session->save();
 
-        $_SESSION['sessionsIds'][$user->id] = $session->id;
+        $user->last_session = $session->id;
+        $user->save();
     }
 
     /**
@@ -49,15 +48,18 @@ class AfterAdminLoginEvent
      */
     public function logoutHandle($event)
     {
-        @session_start();
-
         $user = $event->user;
 
-        $sessionId = $_SESSION['sessionsIds'][$user->id];
+        $sessionId = $user->last_session;
 
-        $sessionLog = SessionLog::find($sessionId);
-        $sessionLog->logout_date = date("Y-m-d H:i:s");
-        $sessionLog->save();
+        if ($sessionId) {
+            $sessionLog = SessionLog::find($sessionId);
+            $sessionLog->logout_date = date("Y-m-d H:i:s");
+            $sessionLog->save();
+        }
+
+        $user->last_session = null;
+        $user->save();
     }
 
     public function loginAppHandle($event)
@@ -77,9 +79,13 @@ class AfterAdminLoginEvent
     {
         $user = $event->user;
 
-        $sessionLog = SessionLog::find($user->lastSession);
-        $sessionLog->logout_date = date("Y-m-d H:i:s");
-        $sessionLog->save();
+        $sessionId = $user->last_session;
+
+        if ($sessionId) {
+            $sessionLog = SessionLog::find($sessionId);
+            $sessionLog->logout_date = date("Y-m-d H:i:s");
+            $sessionLog->save();
+        }
 
         $user->last_session = null;
         $user->save();
